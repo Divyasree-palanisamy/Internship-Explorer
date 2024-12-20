@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Your existing CSS styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: grid;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 200px 1fr; /* Ensure sidebar and main content layout */
+            background-color: #f5f5f5; /* Set background color for the whole page */
+            height: 100vh; /* Extend the height of the container to fill the viewport */
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: normal;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+            background-color: rgb(103, 110, 141);
+            width: 150px;
+            color: brown;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #ddd;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #555;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .form-section {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .additional-info {
+            display: none; /* Hide additional info sections by default */
+        }
+
+        .filter-details {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* Adjust grid columns as needed */
+        }
+
+        .col {
+            margin-bottom: 10px;
+        }
+
+        .col label {
+            margin-bottom: 5px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            text-align: center;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .col input,
+        .col select {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .flash-messages .error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .flash-messages .success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .flashes {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .flashes li {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .flashes .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flashes .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><b><a href="/profile">Profile</a></b></li><br>
+                <li><b><a href="/settings">Settings</a></b></li><br>
+                <li><b><a href="/help">Help</a></b></li><br>
+                <li><b><a href="/logout_confirmation">Logout</a></b></li>
+            </ul>
+        </div>
+       
+        <div class="main-content">
+            <!-- Username Display -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    <ul>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% endwith %}
+            <h2>Welcome, {{ username }}!</h2>
+
+            <!-- User Info Form -->
+            <div class="form-section" id="userInfoSection">
+                <h3>Student Information</h3>
+                {% if info_exists %}
+                    <h2>Welcome back, {{ username }}!</h2>
+                    <!-- Display other dashboard content here -->
+                {% else %}
+                    <!-- User info form -->
+                    <form id="studentInfoForm" action="/submit_details" method="post">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob" required>
+                    
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    
+                        <label for="role">Role:</label>
+                        <select id="role" name="role" required>
+                            <option value="student">Student</option>
+                            <option value="professional">Professional</option>
+                        </select>
+                    
+                        <button type="submit">Submit</button>
+                    </form>
+                {% endif %}
+                {% if message %}
+                    <p>{{ message }}</p>
+                {% endif %}
+                <div id="successMessage" class="flash-messages success hidden">Thank you for your registration!</div>
+            </div>
+            <hr>
+
+            <!-- Internship Preferences Form -->
+            <br>
+            <div class="form-section">
+                <div id="filterSection" class="hidden"> <!-- Initially hidden -->
+                    <h3>Filter Internships</h3>
+                    <form id="filterForm">
+                        <div class="filter-details">
+                            <div class="col">
+                                <label for="filterKeyword">Field:</label>
+                                <select id="filterKeyword" required>
+                                    <option value="">Select field</option>
+                                    <option value="Software">Software</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Data Science">Data Science</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Engineering">Engineering</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="filterDepartment">Department:</label>
+                                <input type="text" id="filterDepartment" placeholder="Department (e.g., Computer Science)" required>
+                            </div>
+                              
+                            <div class="col">
+                                <label for="filterDomain">Domain:</label>
+                                <input type="text" id="filterDomain" placeholder="Domain (e.g., Web Development, AI)" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterCountry">Country:</label>
+                                <input type="text" id="filterCountry" placeholder="Country (e.g., India)" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterState">State:</label>
+                                <input type="text" id="filterState" placeholder="State/Province (e.g., Maharashtra)" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterDistrict">District:</label>
+                                <input type="text" id="filterDistrict" placeholder="District/Region (e.g., Mumbai Suburban)" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterCity">City:</label>
+                                <input type="text" id="filterCity" placeholder="City/Town (e.g., Mumbai)" required>
+                            </div>
+                            
+                            <div class="col">
+                                <label for="filterDuration">Training Duration:</label>
+                                <input type="number" id="filterDuration" placeholder="Duration (in months)" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterStartDate">Start Date:</label>
+                                <input type="date" id="filterStartDate" placeholder="Preferred Start Date" required>
+                            </div>
+                            <div class="col">
+                                <label for="filterEndDate">End Date:</label>
+                                <input type="date" id="filterEndDate" placeholder="Preferred End Date" required>
+                            </div>
+                            <div class="col">
+                                <label for="trainingDuration">Day Duration:</label>
+                                <input type="number" id="trainingDuration" placeholder="Training Duration (in hours)" required>
+                            </div>
+                            <div class="col">
+                                <label for="resumeUpload">Resume:</label>
+                                <input type="file" id="resumeUpload" >
+                            </div>
+                    
+                            <div class="col">
+                                <label for="filterType">Type:</label>
+                                <select id="filterType" required>
+                                    <option value="">Type</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="unpaid">Unpaid</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col hidden" id="priceRangeSection">
+                                <label for="filterPrice">Price Range:</label>
+                                <select id="filterPrice" required>
+                                    <option value="">Price Range</option>
+                                    <option value="600-1000">600 - 1,000</option>
+                                    <option value="1000-5000">1,000 - 5,000</option>
+                                    <option value="5000-10000">5,000 - 10,000</option>
+                                    <option value="10000-50000">10,000 - 50,000</option>
+                                    <option value="50000-100000">50,000 - 100,000</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <button type="submit">Filter</button>
+                    </form>
+                </div>
+               
+                    <!-- Add any additional information display here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Are you sure you want to log out?</p>
+            <button id="confirmLogout">Logout</button>
+            <button id="cancelLogout">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+          // Function to toggle the visibility of the price range section
+          function togglePriceRange() {
+            const filterType = document.getElementById('filterType').value;
+            const priceRangeSection = document.getElementById('priceRangeSection');
+
+            if (filterType === 'paid') {
+                priceRangeSection.classList.remove('hidden');
+            } else {
+                priceRangeSection.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const studentInfoForm = document.getElementById("studentInfoForm");
+            const filterSection = document.getElementById("filterSection");
+            const showFilterButton = document.getElementById("showFilterButton");
+            const successMessage = document.getElementById("successMessage");
+
+            // Handle form submission
+            studentInfoForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                successMessage.classList.remove("hidden"); // Show success message
+                setTimeout(() => {
+                    successMessage.classList.add("hidden"); // Hide success message after a few seconds
+                }, 3000);
+                filterSection.classList.remove("hidden"); // Show filter section
+                // Optionally clear the form fields here
+            });
+
+            // Show filter section when button is clicked
+            showFilterButton.addEventListener("click", function() {
+                filterSection.classList.toggle("hidden");
+            });
+        });
+         function togglePriceRange() {
+            const filterType = document.getElementById('filterType').value;
+            const priceRangeSection = document.getElementById('priceRangeSection');
+
+            if (filterType === 'paid') {
+                priceRangeSection.classList.remove('hidden');
+            } else {
+                priceRangeSection.classList.add('hidden');
+            }
+        }
+
+    </script>
+</body>
+</html>

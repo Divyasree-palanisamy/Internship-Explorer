@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+  
+            color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .login-container {
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 450px;
+            text-align: center;
+            background: rgba(195, 240, 194, 0.8);
+            border: 7px solid #487557; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .overlay {
+            padding: 35px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 7px;
+            margin: 12px 0;
+            border: 5px solid #e0facf;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .images-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .images-container img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+            box-shadow: 0 0 5px rgba(124, 124, 124, 0.5);
+        }
+
+        h1 {
+            background-size: contain;
+            background-color: rgb(166, 229, 171);
+            text-align: center;
+            color: rgb(32, 218, 63);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff7e5f;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-container button:hover {
+            background-color: #feb47b;
+        }
+
+        .login-container .footer {
+            margin-top: 20px;
+            color: #888;
+        }
+
+        .login-container .footer a {
+            color: #ff7e5f;
+            text-decoration: underline;
+        }
+
+        .login-container .footer a:visited {
+            color: #551a8b;
+        }
+
+        .login-container .footer a:hover {
+            color: dodgerblue;
+        }
+
+        .login-container .footer a:active {
+            color: rgb(255, 0, 0);
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox label {
+            margin-left: 5px;
+        }
+
+        .login-container .pass-link a {
+            color: #551a8b;
+            text-decoration: underline;
+        }
+
+        .login-container .pass-link a:hover {
+            color: dodgerblue;
+        }
+
+        .login-container .pass-link a:active {
+            color: rgb(255, 0, 0);
+        }
+
+        .pass-link {
+            margin-left: auto;
+        }
+
+    </style>
+</head>
+<body background="/static/images (4).jfif">
+       <h1><marquee>WELCOME TO INTERNSHIP FINDER....<br><center>LOGIN PAGE</center></marquee></h1>
+    <div class="login-container">
+        <div class="overlay">
+            <h1>Login</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+           <form method="POST" action="/login">
+                <input type="text" name="username" placeholder="username" required>
+                <input type="password" name="password" placeholder="password" required>
+                <div class="content">
+                    <div class="checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember Me</label>
+                    </div>
+                    <div class="pass-link">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <div class="footer">
+                <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Internships for a Company</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Adjust height based on content or viewport height */
+            color: white; /* Adjust text color for better visibility on background */
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Box shadow for container */
+            overflow: auto; /* Ensure content within container scrolls if needed */
+           
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #64777c;
+        }
+
+        input[type="checkbox"] {
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+h1{
+    background-color: aliceblue;
+    color: rgb(106, 231, 231);
+}
+H2{
+    color: aquamarine;
+    
+}
+        button:hover {
+            background-color: #6cdb72;
+        }
+    </style>
+    <script>
+        function addInternshipGroup() {
+            var container = document.createElement('div');
+            container.className = 'internship-group';
+
+            var internshipCount = document.querySelectorAll('.internship-group').length + 1;
+
+            container.innerHTML = `
+                <h3>Internship #${internshipCount}</h3>
+                <label for="title_${internshipCount}">Title:</label>
+                <input type="text" id="title_${internshipCount}" name="titles[]" required>
+
+                <label for="location_${internshipCount}">Location:</label>
+                <input type="text" id="location_${internshipCount}" name="locations[]">
+
+                <label for="url_${internshipCount}">Application Link:</label>
+                <input type="url" id="url_${internshipCount}" name="urls[]">
+
+                <label for="paid_${internshipCount}">Paid:</label>
+                <input type="checkbox" id="paid_${internshipCount}" name="paid[]">
+            `;
+
+            document.getElementById('internships').appendChild(container);
+        }
+
+        function addFeeEntry() {
+            var feesContainer = document.getElementById('fees_container');
+            var feeEntryCount = feesContainer.querySelectorAll('.fee-entry').length + 1;
+
+            var feeEntry = document.createElement('div');
+            feeEntry.className = 'fee-entry';
+            feeEntry.innerHTML = `
+                <label for="duration_${feeEntryCount}">Duration (in days/months):</label>
+                <input type="text" id="duration_${feeEntryCount}" name="durations[]" required>
+                
+                <label for="fee_${feeEntryCount}">Fee:</label>
+                <input type="text" id="fee_${feeEntryCount}" name="fees[]" placeholder="e.g., 4000 or 4000-8000" pattern="^\\d+(-\\d+)?$" required>
+            `;
+
+            feesContainer.appendChild(feeEntry);
+        }
+
+        function addBranch() {
+            var container = document.createElement('div');
+            container.className = 'branch-group';
+
+            var branchCount = document.querySelectorAll('.branch-group').length + 1;
+
+            container.innerHTML = `
+                <h3>Branch #${branchCount}</h3>
+                <label for="branch_name_${branchCount}">Branch Name:</label>
+                <input type="text" id="branch_name_${branchCount}" name="branch_names[]" required>
+
+                <label for="branch_location_${branchCount}">Location:</label>
+                <input type="text" id="branch_location_${branchCount}" name="branch_locations[]" required>
+
+                <label for="branch_contact_${branchCount}">Contact Number:</label>
+                <input type="tel" id="branch_contact_${branchCount}" name="branch_contact_numbers[]" required>
+            `;
+
+            document.getElementById('branches').appendChild(container);
+        }
+    </script>
+</head>
+<body background="/static/images (1).jfif">
+    <div class="container">
+        <h1>Add Internships for a Company</h1>
+        <form action="/add_internship" method="POST">
+
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company" required>
+
+            <label for="headquarters">Headquarters:</label>
+            <input type="text" id="headquarters" name="headquarters" required>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" name="contact_number" required>
+
+            <label for="email">Contact Email:</label>
+            <input type="email" id="email" name="contact_email" required>
+
+            <label for="isocertified">ISO Certified:</label>
+            <input type="checkbox" id="isocertified" name="isocertified" required>
+
+            <div id="branches">
+                <h2><b>Company Branches</b></h2>
+                <!-- Branch groups will be dynamically added here -->
+            </div>
+
+            <input type="button" value="Add Another Branch" onclick="addBranch()">
+
+            <div id="internships">
+                <h2><b>Internships</b></h2>
+                <!-- Internship groups will be dynamically added here -->
+            </div>
+
+            <input type="button" value="Add Another Internship" onclick="addInternshipGroup()">
+
+            <div id="fees_container">
+                <h2><b>Fees</b></h2>
+                <!-- Fee entries will be dynamically added here -->
+            </div>
+
+            <input type="button" value="Add Fee Entry" onclick="addFeeEntry()">
+  
+
+            <label for="ratings">Ratings:</label>
+            <input type="number" id="ratings" name="ratings" min="1" max="5" step="0.1">
+            <br>
+            <input type="submit" value="Add Internships">
+
+        </form>
+        <br>
+        <div class="back-link">
+            <a href="{{ url_for('internships') }}">Back to Internship Listings</a>
+        </div>
+    </div>
+</body>
+</html>

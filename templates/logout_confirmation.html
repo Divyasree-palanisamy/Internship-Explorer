@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Confirmation</title>
+    <style>
+    body {
+        background: linear-gradient(135deg, #6a11cb 0%, #30518b 100%);
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .container {
+        background: rgb(165, 163, 70);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+    }
+    
+    h1 {
+        color: #333;
+        margin-bottom: 10px;
+        background-color: aliceblue;
+    }
+    
+    p {
+        color: #1f1d1d;
+        margin-bottom: 20px;
+    }
+    
+    .button-group {
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s, color 0.3s;
+    }
+    
+    .btn.logout {
+        background-color: #ff5f6d;
+        color: rgb(175, 67, 67);
+    }
+    
+    .btn.logout:hover {
+        background-color: #ff2d3f;
+    }
+    
+    .btn.cancel {
+        background-color: #ccc;
+        color: #333;
+    }
+    
+    .btn.cancel:hover {
+        background-color: #bbb;
+    }
+    </style>
+    
+</head>
+<body >
+    <div class="container">
+        <h1><b>Logout Confirmation</b></h1>
+        <p>Are you sure you want to logout?</p>
+        <div class="button-group">
+            <button onclick="window.location.href='/logout'">Logout</button>
+            <button onclick="window.location.href='/dashboard'">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>

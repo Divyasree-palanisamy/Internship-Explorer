@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Details</title>
+</head>
+<body>
+
+    <h2>Submit Your Details</h2>
+
+    <form id="studentInfoForm" action="/submit_details" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="student">Student</option>
+            <option value="professional">Professional</option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Success or error message display -->
+    {% if message %}
+        <div class="flash-messages {{ 'success' if 'error' not in message else 'error' }}">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <!-- Link to go back to dashboard -->
+    <a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<form action="{{ url_for('apply_internship') }}" method="POST" style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <label for="company" style="display: block; font-weight: bold; margin-bottom: 5px;">Select Company:</label>
+    <select id="company" name="company" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px;">
+        {% for company in companies %}
+            <option value="{{ company.id }}" data-offers-discount="{{ company.offers_discount }}">{{ company.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="base_fee" style="display: block; font-weight: bold; margin-bottom: 5px;">Base Fee per person: $1000</label>
+    <input type="hidden" id="base_fee" value="1000">
+
+    <label for="group_size" style="display: block; font-weight: bold; margin-top: 15px; margin-bottom: 5px;">Enter number of participants:</label>
+    <input type="number" id="group_size" name="group_size" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px;">
+
+    <p style="font-weight: bold; font-size: 1.1em; margin-top: 15px;">Total Fee: $<span id="total_fee">1000</span></p>
+
+    <button type="submit" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background-color 0.3s;">
+        Apply
+    </button>
+</form>
+
+<script>
+    const baseFee = parseFloat(document.getElementById('base_fee').value);
+    const groupSizeInput = document.getElementById('group_size');
+    const totalFeeSpan = document.getElementById('total_fee');
+    const companySelect = document.getElementById('company');
+
+    function calculateTotalFee() {
+        let groupSize = parseInt(groupSizeInput.value);
+        let offersDiscount = companySelect.options[companySelect.selectedIndex].dataset.offersDiscount === 'true';
+        let discount = 0;
+
+        if (offersDiscount) {
+            if (groupSize >= 5 && groupSize <= 10) {
+                discount = 0.05; // 5% discount for 5-10 participants
+            } else if (groupSize >= 11 && groupSize <= 20) {
+                discount = 0.10; // 10% discount for 11-20 participants
+            } else if (groupSize > 20) {
+                discount = 0.15; // 15% discount for more than 20 participants
+            }
+        }
+
+        let totalFee = baseFee * (1 - discount) * groupSize;
+        totalFeeSpan.textContent = totalFee.toFixed(2);
+    }
+
+    groupSizeInput.addEventListener('input', calculateTotalFee);
+    companySelect.addEventListener('change', calculateTotalFee);
+</script>

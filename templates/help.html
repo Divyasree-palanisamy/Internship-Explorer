@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Internship Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #cfcfc3;
+            margin: 0;
+            padding: 0;
+        }
+        .help-container {
+            width: 80%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: #bdbdb0;
+            border-radius:rgb(218, 189, 189)0px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            
+            color: rgba(255, 38, 0, 0.801);
+            background-color: #8adadd;
+
+            font-size: 2em;
+            text-align: center;
+        }
+        h2 {
+            background-color: #d8e782c0;
+            font-size: 1.5em;
+            
+            
+            color: rgba(255, 38, 0, 0.801);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .section p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .faq {
+            margin-bottom: 20px;
+        }
+        .faq h3 {
+            cursor: pointer;
+            color: #007bff;
+            margin: 0;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .faq h4{
+            cursor: pointer;
+            color: #007bff;
+            margin: 0;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .faq p {
+            display: none;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var faqs = document.querySelectorAll('.faq h4');
+            faqs.forEach(function(faq) {
+                faq.addEventListener('click', function() {
+                    var answer = this.nextElementSibling;
+                    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        });
+    </script>
+</head>
+<body background="/static/i3.jpeg">
+    <div class="help-container">
+        <h1>Help & Support</h1>
+        
+        <!-- Introduction -->
+        <div class="section">
+            <h2><u>Welcome to the Help Center</u></h2>
+            <p>We're here to assist you with any questions or issues you might have while using Internship Finder. Browse through our FAQs, guides, and resources to get the help you need.</p>
+            
+        </div>
+        
+        <!-- Frequently Asked Questions -->
+        <div class="section faq">
+            <h2><u>Frequently Asked Questions</u></h2>
+            <div class="faq-item">
+                <h4>How do I create an account?</h4>
+                <p>To create an account, click on the "Sign Up" button on the top right corner of the page. Fill in your details and submit the form. You will receive a confirmation email to verify your account.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How can I apply for internships?</h4>
+                <p>After logging in, go to the "Internships" section. Browse the available listings and click on the ones you're interested in. Follow the application instructions provided in each listing.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What should I do if I forget my password?</h4>
+                <p>If you've forgotten your password, click on the "Forgot Password" link on the login page. Follow the instructions to reset your password using your email address.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How do I update my profile?</h4>
+                <p>Go to the "Settings" page from your dashboard. Here, you can update your personal information, change your password, and adjust your preferences.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How can I change my email address?</h4>
+                <p>To change your email address, visit the "Settings" page and update your email information. You may need to verify the new email address.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How can I report an issue with an internship listing?</h4>
+                <p>If you find an issue with an internship listing, please use the "Report an Issue" button on the listing page or contact our support team directly.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I apply for multiple internships at once?</h4>
+                <p>Yes, you can apply for multiple internships. Ensure that you meet the requirements for each listing and follow the application instructions provided.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How can I contact the company offering an internship?</h4>
+                <p>Contact details for each company are usually provided in the internship listing. If not, you can use the contact form on their website or reach out via their provided email.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How can I provide feedback about the platform?</h4>
+                <p>You can provide feedback using the "Give Us Feedback" section on this page. We value your input and use it to improve our services.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What should I do if I suspect fraudulent activity?</h4>
+                <p>If you suspect fraudulent activity, please report it immediately using the "Report an Issue" feature or contact our support team.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What if I experience technical issues?</h4>
+                <p>If you experience technical issues, please clear your browser cache and cookies. If the issue persists, contact our support team for assistance.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I delete my account?</h4>
+                <p>Yes, you can delete your account from the "Settings" page. Please note that this action is permanent and will remove all your data from our system.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Are my data and privacy secure?</h4>
+                <p>We take your privacy seriously and implement strong security measures to protect your data. For more information, please review our privacy policy.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can I change the language of the platform?</h4>
+                <p>The platform currently supports English. We are working on adding support for more languages in the future.</p>
+            </div>
+            <div class="faq-item">
+                <h4>How do I find internships in a specific location?</h4>
+                <p>Use the location filter in the "Internships" section to search for opportunities based on your preferred location.</p>
+            </div>
+        </div>
+        
+     
+        <!-- Contact Support -->
+        <div class="section">
+            <h2><u>Contact Support</u></h2>
+            <p>If you need further assistance, please reach out to our support team. We're here to help you with any issues or questions you might have.</p>
+            <p>Email: <a href="mailto:support@internshipfinder.com">support@internshipfinder.com</a></p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <img src="/static/support.jpg" alt="Support Image">
+        </div>
+        <!-- Contact Form with File Upload -->
+<div class="section">
+    <h2><u>Contact Support with Attachment</u></h2>
+    <form action="/contact_support" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div><br>
+        <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+        </div><br>
+        <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
+        </div><br>
+        <div class="form-group">
+            <label for="attachment">Attachment</label>
+            <input type="file" id="attachment" name="attachment">
+        </div><br>
+        <div class="form-group">
+            <button type="submit">Send Message</button>
+        </div>
+    </form>
+</div>
+
+        
+        <!-- Feedback Section -->
+        <div class="section">
+            <h2><u>Give Us Feedback</u></h2>
+            <p>Your feedback helps us improve our service. Please let us know if you have any suggestions or comments.</p>
+            <form action="/submit_feedback" method="POST">
+                <div class="form-group">
+                    <label for="feedback"></label>
+                    <textarea id="feedback" name="feedback" rows="4" placeholder="Enter your feedback here..." required></textarea>
+                </div><br>
+                <div class="form-group">
+                    <button type="submit">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+        <!-- Download User Manual -->
+<div class="section">
+    <h2><u>Download User Manual</u></h2>
+    <a href="/static/user-manual.pdf" download="User_Manual.pdf">
+        <button>Download Manual</button>
+    </a>
+</div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Back to <a href="/dashboard">Dashboard</a></p>
+        </div>
+    </div>
+</body>
+</html>
